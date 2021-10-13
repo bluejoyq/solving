@@ -6,9 +6,9 @@
 #include <tuple>
 using namespace std;
 
-int shortest_path(int T,int U1,int U2,int V1,int V2, int nodes_per_line[], pair<int,int> edges[][50]){
-	priority_queue<tuple<int,int,int>> p_q;
-	bool visited[10][50] = {0};
+int shortest_path(int T,int U1,int U2,int V1,int V2, int* nodes_per_line, pair<int,int> edges[][51]){
+	priority_queue<tuple<int,int,int>,  vector<tuple<int,int,int>>, greater<tuple<int,int,int>>> p_q;
+	bool visited[11][51] = {0};
 	int cur_line, cur_node, cur_val;
 
 	p_q.push(make_tuple(0,U1, U2));
@@ -25,17 +25,16 @@ int shortest_path(int T,int U1,int U2,int V1,int V2, int nodes_per_line[], pair<
 		}
 		visited[cur_line][cur_node] = 1;
 		
-		cout << edges[cur_line][cur_node].first << ' ' <<edges[cur_line][cur_node].second << ' ' << endl;
 		if(edges[cur_line][cur_node].first != -1 && visited[edges[cur_line][cur_node].first][edges[cur_line][cur_node].second] == 0){
 			p_q.push(make_tuple(cur_val + T, 
 				edges[cur_line][cur_node].first, edges[cur_line][cur_node].second));
 		}
-		if(cur_node <= nodes_per_line[cur_line] && !visited[cur_line][cur_node + 1]){
+		if(cur_node < nodes_per_line[cur_line] && !visited[cur_line][cur_node + 1]){
 			p_q.push(make_tuple(cur_val + 1, cur_line, cur_node +1));
 		}
 		
 
-		if(cur_node > - 1 && !visited[cur_line][cur_node -1]){
+		if(cur_node > 0 && !visited[cur_line][cur_node -1]){
 			p_q.push(make_tuple(cur_val + 1, cur_line, cur_node-1));
 		}
 		
@@ -44,17 +43,17 @@ int shortest_path(int T,int U1,int U2,int V1,int V2, int nodes_per_line[], pair<
 }
 
 int main() {
-	int N, M, K, nodes_per_line[10]; 
-	pair<int,int> edges[10][50];
-	for (int i = 0; i < 10; i++){
-		for(int j = 0; j < 50; j++){
+	int N, M, K, nodes_per_line[11]; 
+	pair<int,int> edges[11][51];
+	for (int i = 0; i < 11; i++){
+		for(int j = 0; j < 51; j++){
 			edges[i][j].first = -1;
 			edges[i][j].second = -1;
 		}
 	}
 	cin >> N;
 	for (int i = 0; i < N; i++){
-		cin >> nodes_per_line[N];
+		cin >> nodes_per_line[i];
 	}
 
 	cin >> M;
