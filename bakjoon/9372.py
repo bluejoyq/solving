@@ -29,10 +29,9 @@ for _ in range(T):
 			findings.append(nxt)
 			is_dead_end = 0
 		result += 1
-		if is_dead_end:
-			result += 1
+
 	
-	print(result - 2)
+	print(result - 1)
 
 '''
 1
