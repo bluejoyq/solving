@@ -1,4 +1,11 @@
-N = 5
-nx = -1
-ny = 0
-print(not(0 <= nx < N and 0 <= ny < N))
+def star(func):
+    def inner(*args, **kwargs):
+        print(args[1] * 30)
+        func(*args, **kwargs)
+        print(args[1] * 30)
+    return inner
+
+@star
+def printer(msg, mark):
+    print(msg)
+printer("Hello", "&")
