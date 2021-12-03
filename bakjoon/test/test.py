@@ -1,11 +1,10 @@
-def star(func):
-    def inner(*args, **kwargs):
-        print(args[1] * 30)
-        func(*args, **kwargs)
-        print(args[1] * 30)
-    return inner
+import random
 
-@star
-def printer(msg, mark):
-    print(msg)
-printer("Hello", "&")
+
+while True: 
+    target =random.uniform(1,2)
+    a = str(round(target,2))
+    b = format(target,".2f")
+    if a != b:
+        print(target,a,b)
+        break
