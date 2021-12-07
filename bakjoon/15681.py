@@ -14,10 +14,7 @@ for i in range(N - 1):
 
 
 nodes = [1] * (N + 1)
-
-findings = deque([(R,1)])
-
-
+'''
 def dfs(cur):
 	for nxt in edges[cur].keys():
 		del edges[nxt][cur]
@@ -25,7 +22,11 @@ def dfs(cur):
 	return nodes[cur]
 
 dfs(R)
-	
+'''	
+
+
+
+
 result = []
 for i in range(Q):
 	q_node = int(input())
