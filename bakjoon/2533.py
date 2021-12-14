@@ -5,33 +5,26 @@ input =sys.stdin.readline
 sys.setrecursionlimit(1000000)
 N = int(input())
 
-edges = [{} for i in range(N)]
+edges = [{} for i in range(N + 1)]
 for i in range(N-1):
 	u,v = map(int, input().split())
-	edges[u-1][v-1] = 1
-	edges[v-1][u-1] = 1
+	edges[u][v] = 1
+	edges[v][u] = 1
 
-visited = [0] * N
-cache = [N] * N
-def dfs(cur, is_essential):
+visited = [0] * (N + 1)
+cache = [[0,0] for i in range(N + 1)] 
+result = 0
+
+findings = [1]
+
+def dfs(cur):
 	visited[cur] = 1
-	selected_result = 1
-	not_selected_result = 0
-
+	cache[cur][1] =  1
 	for nxt in edges[cur].keys():
 		if visited[nxt]:
 			continue
-		selected_result += dfs(nxt, 0)
-	if is_essential:
-		visited[cur] = 0
-		return selected_result
-
-	for nxt in edges[cur].keys():
-		if visited[nxt]:
-			continue
-		not_selected_result += dfs(nxt, 1)
-	visited[cur] = 0
-	return min(selected_result,not_selected_result)
-	
-
-print(dfs(0, 0))
+		dfs(nxt)
+		cache[cur][1] += min(cache[nxt][1],cache[nxt][0])
+		cache[cur][0] += cache[nxt][1]
+dfs(1)
+print(min(cache[1]))
