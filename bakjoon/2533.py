@@ -1,8 +1,6 @@
 # 각 level의 수를 비교해야함.
 import sys
-from collections import deque
 input =sys.stdin.readline
-sys.setrecursionlimit(1000000)
 N = int(input())
 
 edges = [{} for i in range(N + 1)]
@@ -12,19 +10,29 @@ for i in range(N-1):
 	edges[v][u] = 1
 
 visited = [0] * (N + 1)
-cache = [[0,0] for i in range(N + 1)] 
+cache = [[0,1] for i in range(N + 1)] 
+parents = [0] * (N+1)
 result = 0
-
+visited_nodes = []
 findings = [1]
 
-def dfs(cur):
+while findings:
+	cur = findings.pop()
 	visited[cur] = 1
-	cache[cur][1] =  1
+	visited_nodes.append(cur)
+
 	for nxt in edges[cur].keys():
 		if visited[nxt]:
+			parents[cur] = nxt
 			continue
-		dfs(nxt)
-		cache[cur][1] += min(cache[nxt][1],cache[nxt][0])
-		cache[cur][0] += cache[nxt][1]
-dfs(1)
+		
+		findings.append(nxt)
+
+while visited_nodes:
+	child = visited_nodes.pop()
+	parent = parents[child]
+
+	cache[parent][1] += min(cache[child][0], cache[child][1])
+	cache[parent][0] += cache[child][1]
+
 print(min(cache[1]))
