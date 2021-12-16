@@ -13,7 +13,6 @@ for i in range(N):
 			cur[value] = {}
 			cur = cur[value]
 
-
 cur = root
 def dfs(cur, depth):
 	for nxt in sorted(cur.keys()):

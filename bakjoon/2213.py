@@ -2,43 +2,41 @@ import sys
 input = sys.stdin.readline
 
 N = int(input())
-nodes = list(map(int,input().split()))
+nodes = [0] + list(map(int,input().split()))
 
-edges = [{} for i in range(N)]
+edges = [{} for i in range(N + 1)]
 
 for i in range(N-1):
 	a,b= map(int, input().split())
-	edges[a - 1][b - 1] = 1
-	edges[b - 1][a - 1] = 1
+	edges[a][b] = 1
+	edges[b][a] = 1
 
-cache = [[0,0] for i in range(N)]
-visited = [0] * N
-findings = [0]
+cache = [[0,0] for i in range(N + 1)]
+visited = [0] * (N+1)
+findings = [1]
 visited_nodes = []
 
-while findings:
-	cur = findings.pop()
+def dfs(cur):
 	visited[cur] = 1
-	visited_nodes.append(cur)
 	cache[cur][1] += nodes[cur]
+	
+
 	for nxt in edges[cur].keys():
 		if visited[nxt]:
 			continue
-		cache[nxt][0] = cache[cur][1]
-		cache[nxt][1] = min(cache[cur][1], cache[cur][0])
 		findings.append(nxt)
+		visited_nodes.append((cur, nxt))
+		dfs(nxt)
+		cache[cur][1] += cache[nxt][0]
+		cache[cur][0] += max(cache[nxt][0] , cache[nxt][1])
 
+dfs(1)
+cur_val = max(cache[1])
+print(cur_val)
+result = {}
 
-max_val = max(cache[N - 1])
-max_idx = N-1
-result = []
-
-
-print(visited_nodes, cache)
-for i in range(1, N):
-	bef = visited_nodes[i-1]
-	cur = visited_nodes[i]
-
-	print(cache[cur])
-result.sort()
-print(result)
+for parent, child in visited_nodes:
+	print(parent,cache[parent], child, cache[child], cur_val)
+	if max(cache[parent]) == max(cache[child]) + nodes[parent]:
+		result[parent] = 1
+print(*sorted(result.keys()))
