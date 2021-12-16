@@ -14,7 +14,7 @@ for i in range(N-1):
 cache = [[0,0] for i in range(N + 1)]
 visited = [0] * (N+1)
 findings = [1]
-visited_nodes = []
+visited_nodes = [(0,1)]
 
 def dfs(cur):
 	visited[cur] = 1
@@ -37,6 +37,6 @@ result = {}
 
 for parent, child in visited_nodes:
 	print(parent,cache[parent], child, cache[child], cur_val)
-	if max(cache[parent]) == max(cache[child]) + nodes[parent]:
-		result[parent] = 1
+	if max(cache[parent]) <= max(cache[child]) + nodes[parent]:
+		result[child] = 1
 print(*sorted(result.keys()))
