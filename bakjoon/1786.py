@@ -16,8 +16,7 @@ while idx < M:
     else:
         lps[idx] = max_pre_length
         idx += 1
- 
-print(lps)
+
 a = 0
 b = 0
 
@@ -25,8 +24,17 @@ result = []
 while a < N:
     if T[a] == P[b]:
         if b == M-1:
-            result.append(a)
+            result.append(a - M + 2)
             b = lps[b]
+            a += 1
+            continue
         a += 1
         b += 1
-        continue
+    else:
+        
+        if b == 0:
+            a+= 1
+            continue
+        b = lps[b - 1]
+print(len(result)) 
+print(*result)
