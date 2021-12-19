@@ -28,14 +28,12 @@ cur_idx = idx_cache[cur_pos]
 #print(idx_cache)
 #print(cache)
 #print(pos_cache)
-loop_count = 0
 for cur_pos in range(last_pos - 1, -1, -1):
 	bef_idx = idx_cache[cur_pos - 1]
 	if bef_idx < cur_idx:
 		cur_idx = bef_idx
 		continue
 	for idx in range(cur_idx - 1, -1,-1):
-		loop_count+= 1
 		#if values[idx] >= values[idx_cache[cur_pos]]:
 		#		continue
 		if pos_cache[idx] != cur_pos - 1:
@@ -44,5 +42,4 @@ for cur_pos in range(last_pos - 1, -1, -1):
 		cur_idx = idx
 		break
 
-print(loop_count)
 print(*cache[:last_pos])
