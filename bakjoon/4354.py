@@ -3,21 +3,29 @@
 
 def solve(s):
     L = len(s)
-    lps = [0] * L
-    last_length = 0
-    idx = 1
-    while idx < L:
-        if s[idx] == s[last_length]:
-            last_length += 1
-            lps[idx] = last_length 
-            idx += 1
-        else:
-            if last_length == 0:
-                idx += 1
-                continue
-            last_length -= 1
-    print(lps)
 
+    cur_idx = 1
+    cur_length = 1
+    last = 0
+    while cur_idx < L:
+        if s[cur_idx] == s[last]:
+            last += 1
+            cur_idx += 1
+            
+        elif cur_idx > L // 2:
+            cur_length = L
+            break
+        elif last > 0:
+            last -= 1
+            cur_length += 1
+        else:
+            cur_idx += 1
+            cur_length += 1
+
+    if last % cur_length == 0:
+        print(L // cur_length)
+    else:   
+        print(1)
 while True:
     s = input()
 
