@@ -1,27 +1,23 @@
-n=int(input())
-a, b=map(int, input().split())
-m=int(input())
-graph=[[] for _ in range(n+1)]
-visited=[0 for _ in range(n+1)]
-ls=[]
-for _ in range(m):
-        n1, n2=map(int, input().split())
-        graph[n1].append(n2)
-        graph[n2].append(n1)
-        
-def dfs(graph, start, visited):
-    visited[start]=1
-    ls.append(start)
-    for i in graph[start]:
-        if visited[i]==0:
-            dfs(graph, i, visited)
+N = str(input())
 
-dfs(graph, a, visited)
-dist=[]
-if b not in ls:
-    print(-1)
-else:
-    for i in graph[a]:
-        d=ls.index(b)-ls.index(i)
-        dist.append(d)
-    print(min(dist)+1)
+z = N.split('-')
+
+for i in range(0, len(z)):
+    j = list(z[i])
+    while j[0] == '0':
+        if len(j) == 1:
+            break
+        else:
+            del j[0]
+    h = ''
+    for x in j:
+        h += x
+    z[i] = h
+        
+answer = eval(z[0])*2
+
+for k in z:
+    answer -= eval(k)
+
+print(answer)
+# 1010-10101+01010+0000
