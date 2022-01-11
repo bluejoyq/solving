@@ -65,7 +65,7 @@ class Deque:
         if self.front_node == None:
             self.back_node = None
         else:
-            self.back_node.set_bef(None)
+            self.front_node.set_bef(None)
         val = cur.get_val()
         del cur
         return val
@@ -89,20 +89,8 @@ result = []
 for i in range(N):
     commands = list(input().split())
     func = getattr(deq,commands[0])
-    if commands[0] == 'push_back':
-        deq.push_back(int(commands[1]))
-    elif commands[0] == 'push_front':
-        deq.push_front(int(commands[1]))
-    elif commands[0] == 'front':
-        result.append(deq.front())
-    elif commands[0] == 'back':
-        result.append(deq.back())
-    elif commands[0] == 'pop_front':
-        result.append(deq.pop_front())
-    elif commands[0] == 'pop_back':
-        result.append(deq.pop_back())
-    elif commands[0] == 'empty':
-        result.append(deq.empty())
-    elif commands[0] == 'size':
-        result.append(deq.size())
+    if len(commands) == 1:
+        result.append(func())
+    else:
+        func(int(commands[1]))
 print('\n'.join(map(str,result)))
