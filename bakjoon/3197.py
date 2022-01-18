@@ -16,11 +16,12 @@ def solve():
             return 1
         return 0
     def find_bird():
+        result = (-1,-1)
         for r in range(R):
             for c in range(C):
                 if board[r][c] == 'L':
-                    return r,c
-
+                    result = r,c
+        return result
 
     visited = [[0] * C for i in range(R)]
     start_r, start_c = find_bird()
