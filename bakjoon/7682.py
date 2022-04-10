@@ -1,13 +1,12 @@
+import sys
+input = sys.stdin.readline
+
 result = []
 checks = [[0,1,2], [3,4,5], [6,7,8], [0,4,8], [2,4,6], [0,3,6], [1,4,7], [2,5,8]]
-
-def flag(board,equ):
-    for check in checks:
-        if board[check[0]] == board[check[1]] == board[check[2]] == equ:
-            return 1
-    return 0
+exception_case = ['X','O','X','O','X','O','X','O','X']
 
 def is_valid(board):
+    
     x_count = 0
     o_count = 0
 
@@ -16,25 +15,48 @@ def is_valid(board):
             x_count += 1
         elif b == 'O':
             o_count += 1
-
-    if x_count > o_count + 1:
+        elif b == '.':
+            continue
+        else:
+            return 0
+    if not(x_count == o_count + 1 or o_count == x_count):
         return 0
-    if o_count > x_count:
+    if len(board) > 9 or len(board) < 9:
         return 0
-    if x_count == o_count + 1 and flag(board, 'X') and not flag(board, 'O'):
+    x_win = 0
+    o_win = 0
+    for check in checks:
+        start = board[check[0]]
+        end_check = 1
+        if start == '.':
+            continue
+        for nxt in check[1:]:
+            if start == board[nxt]:
+                continue
+            end_check = 0
+            break
+        if not end_check:
+            continue
+        if start == 'X':
+            x_win += 1
+        else:
+            o_win += 1
+    
+    if x_win > 0 and o_win > 0:
+        return 0
+    elif x_win > 0 and x_count == o_count + 1:
         return 1
-    if x_count == o_count and flag(board, 'O') and not flag(board, 'X'):
+    elif o_win > 0 and x_count == o_count:
         return 1
-    if o_count + x_count == 9 and not flag(board, 'O'):
+    elif o_count + x_count == 9:
         return 1
     return 0
 
-
-board = list(input()) 
+board = list(input().rstrip()) 
 while board[0] != 'e':
     if is_valid(board):
         result.append('valid')
     else:
         result.append('invalid')
-    board = list(input()) 
+    board = list(input().rstrip()) 
 print('\n'.join(result))

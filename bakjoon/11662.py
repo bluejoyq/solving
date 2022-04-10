@@ -1,0 +1,1 @@
+Ax, Ay, Bx, By, Cx, Cy, Dx, Dy = map(int, input().split())
